@@ -149,6 +149,49 @@
   color: #212529;
 }
 
+/* Login Page Styles */
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+
+[data-darkmode="true"] .login-container {
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+[data-darkmode="true"] .bg-gradient-primary {
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+}
+
+/* Register Page Styles */
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+
+[data-darkmode="true"] .register-container {
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+}
+
 [data-darkmode="true"] .nav-link {
   color: #e9ecef;
 }

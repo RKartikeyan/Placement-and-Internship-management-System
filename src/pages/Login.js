@@ -41,43 +41,60 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-header">
-              <h3>Login to PIMS</h3>
-            </div>
-            <div className="card-body">
-              {error && <div className="alert alert-danger">{error}</div>}
-              <form onSubmit={onSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    value={email}
-                    onChange={onChange}
-                    required
-                  />
+    <div className="login-container">
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5">
+            <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div className="card-header bg-gradient-primary text-white text-center py-4">
+                <i className="bi bi-building display-4 mb-2"></i>
+                <h3 className="mb-0 fw-bold">Welcome to PIMS</h3>
+                <p className="mb-0 opacity-75">Placement Information Management System</p>
+              </div>
+              <div className="card-body p-4">
+                {error && <div className="alert alert-danger rounded-3">{error}</div>}
+                <form onSubmit={onSubmit}>
+                  <div className="mb-4">
+                    <label className="form-label fw-semibold">
+                      <i className="bi bi-envelope me-2"></i>Email Address
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control form-control-lg rounded-3"
+                      name="email"
+                      value={email}
+                      onChange={onChange}
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="form-label fw-semibold">
+                      <i className="bi bi-lock me-2"></i>Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control form-control-lg rounded-3"
+                      name="password"
+                      value={password}
+                      onChange={onChange}
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-lg w-100 rounded-3 fw-semibold">
+                    <i className="bi bi-box-arrow-in-right me-2"></i>Login
+                  </button>
+                </form>
+                <div className="text-center mt-4">
+                  <p className="mb-0">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="text-decoration-none fw-semibold">
+                      Register here
+                    </Link>
+                  </p>
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={password}
-                    onChange={onChange}
-                    required
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary w-100">Login</button>
-              </form>
-              <p className="mt-3 text-center">
-                Don't have an account? <Link to="/register">Register here</Link>
-              </p>
+              </div>
             </div>
           </div>
         </div>
