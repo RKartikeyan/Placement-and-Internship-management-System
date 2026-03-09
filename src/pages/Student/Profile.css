@@ -1,0 +1,259 @@
+/* Profile Container Styling */
+.profile-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* Profile Header */
+.profile-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header .form-control,
+.profile-header .form-control-lg {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  color: #333;
+}
+
+.profile-header .form-control::placeholder,
+.profile-header .form-control-lg::placeholder {
+  color: #999;
+}
+
+.profile-header .form-control:focus,
+.profile-header .form-control-lg:focus {
+  background-color: white;
+  color: #333;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Card Styling */
+.card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  border-bottom: 2px solid #e9ecef;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.card-header h5 {
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Form Controls */
+.form-control,
+.form-select {
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+/* Skills and Language Tags */
+.skill-tags,
+.language-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  padding: 8px 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Item Sections */
+.education-item,
+.work-item,
+.project-item,
+.cert-item {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.education-item:hover,
+.work-item:hover,
+.project-item:hover,
+.cert-item:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #667eea;
+  border-color: #667eea;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #5568d3;
+  border-color: #5568d3;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-danger {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.btn-outline-secondary {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+/* Save Button */
+.btn-success {
+  background-color: #10b981;
+  border-color: #10b981;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #059669;
+  border-color: #059669;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+/* Input Groups */
+.input-group {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.input-group .form-control {
+  border-radius: 6px 0 0 6px;
+}
+
+.input-group .btn {
+  border-radius: 0 6px 6px 0;
+}
+
+/* Textarea */
+textarea.form-control {
+  resize: vertical;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Checkboxes */
+.form-check-input {
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.4rem;
+}
+
+.form-check-input:checked {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.form-check-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Empty States */
+.text-muted {
+  color: #999 !important;
+  font-style: italic;
+}
+
+/* Back Button */
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 10px;
+  }
+
+  .card {
+    margin-bottom: 15px;
+  }
+
+  .badge {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .profile-header {
+  background: linear-gradient(135deg, #4c63d2 0%, #564fa2 100%);
+}
+
+[data-bs-theme="dark"] .card {
+  background-color: #343a40;
+  border-color: #495057;
+}
+
+[data-bs-theme="dark"] .card-body {
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .education-item,
+[data-bs-theme="dark"] .work-item,
+[data-bs-theme="dark"] .project-item,
+[data-bs-theme="dark"] .cert-item {
+  background-color: #495057;
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+  background-color: #495057;
+  border-color: #6c757d;
+  color: #e9ecef;
+}

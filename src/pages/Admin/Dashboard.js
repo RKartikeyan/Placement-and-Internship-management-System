@@ -58,6 +58,40 @@ const AdminDashboard = () => {
     }
   };
 
+  const updateUserRole = async (userId, newRole) => {
+    try {
+      await api.put(`/users/${userId}/role`, { role: newRole });
+      fetchUsers();
+      alert('User role updated successfully');
+    } catch (err) {
+      alert('Failed to update user role');
+    }
+  };
+
+  const deleteJob = async (jobId) => {
+    if (window.confirm('Are you sure you want to delete this job posting?')) {
+      try {
+        await api.delete(`/jobs/${jobId}`);
+        alert('Job deleted successfully');
+        fetchJobs();
+      } catch (err) {
+        alert('Failed to delete job');
+      }
+    }
+  };
+
+  const deleteApplication = async (appId) => {
+    if (window.confirm('Are you sure you want to remove this application?')) {
+      try {
+        await api.delete(`/applications/${appId}`);
+        alert('Application deleted successfully');
+        fetchApplications();
+      } catch (err) {
+        alert('Failed to delete application');
+      }
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -136,6 +170,8 @@ const AdminDashboard = () => {
                       <th>Email</th>
                       <th>Role</th>
                       <th>Status</th>
+                      <th>Change Role</th>
+                      <th>Resume</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -153,6 +189,36 @@ const AdminDashboard = () => {
                           <span className={`badge ${user.isActive ? 'bg-success' : 'bg-danger'}`}>
                             {user.isActive ? 'Active' : 'Inactive'}
                           </span>
+                        </td>
+                        <td>
+                          <select
+                            className="form-select form-select-sm"
+                            value={user.role}
+                            onChange={(e) => updateUserRole(user._id, e.target.value)}
+                          >
+                            <option value="student">Student</option>
+                            <option value="recruiter">Recruiter</option>
+                            <option value="admin">Admin</option>
+                          </select>
+                        </td>
+                        <td>
+                          {user.role === 'student' ? (
+                            user.resume ? (
+                              <a
+                                href={`http://localhost:5000/uploads/${user.resume}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-sm btn-outline-info"
+                                title="View Student Resume"
+                              >
+                                📄 View Resume
+                              </a>
+                            ) : (
+                              <span className="badge bg-warning text-dark">No Resume</span>
+                            )
+                          ) : (
+                            <span className="text-muted">—</span>
+                          )}
                         </td>
                         <td>
                           <button
@@ -176,10 +242,21 @@ const AdminDashboard = () => {
               {jobs.map(job => (
                 <div key={job._id} className="card mb-3">
                   <div className="card-body">
-                    <h5 className="card-title">{job.title}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      {job.company.profile?.company || job.company.name} • {job.location} • {job.type}
-                    </h6>
+                    <div className="d-flex justify-content-between align-items-start">
+                      <div>
+                        <h5 className="card-title">{job.title}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">
+                          {job.company.profile?.company || job.company.name} • {job.location} • {job.type}
+                        </h6>
+                      </div>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => deleteJob(job._id)}
+                        title="Delete Job"
+                      >
+                        Delete Job
+                      </button>
+                    </div>
                     <p className="card-text">{job.description}</p>
                     <div className="row">
                       <div className="col-md-6">
@@ -206,7 +283,10 @@ const AdminDashboard = () => {
                       <th>Job</th>
                       <th>Company</th>
                       <th>Status</th>
+                      <th>ATS Score</th>
+                      <th>Resume</th>
                       <th>Applied Date</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -220,7 +300,38 @@ const AdminDashboard = () => {
                             {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                           </span>
                         </td>
+                        <td>
+                          {app.atsScore !== undefined ? (
+                            <span className="badge bg-info">{app.atsScore}%</span>
+                          ) : (
+                            <span className="text-muted">N/A</span>
+                          )}
+                        </td>
+                        <td>
+                          {app.student.resume ? (
+                            <a
+                              href={`http://localhost:5000/uploads/${app.student.resume}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-sm btn-outline-primary"
+                              title="View Student Resume"
+                            >
+                              📄 View
+                            </a>
+                          ) : (
+                            <span className="badge bg-warning">No Resume</span>
+                          )}
+                        </td>
                         <td>{new Date(app.appliedAt).toLocaleDateString()}</td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => deleteApplication(app._id)}
+                            title="Remove Application"
+                          >
+                            Remove
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

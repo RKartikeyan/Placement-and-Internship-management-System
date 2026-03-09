@@ -36,3 +36,137 @@
     transform: rotate(360deg);
   }
 }
+
+/* Dark Mode Toggle Button Styling */
+.dark-mode-toggle {
+  z-index: 1050;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.dark-mode-toggle button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  line-height: 1;
+}
+
+.dark-mode-toggle button:hover {
+  transform: scale(1.1) rotate(20deg);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.dark-mode-toggle button:active {
+  transform: scale(0.95);
+}
+
+[data-darkmode="true"] .dark-mode-toggle button {
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+[data-darkmode="true"] .dark-mode-toggle button:hover {
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+[data-darkmode="true"] {
+  background-color: #212529;
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .card {
+  background-color: #343a40;
+  border-color: #495057;
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .card-body {
+  background-color: #343a40;
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .card-header {
+  background-color: #495057;
+  border-color: #6c757d;
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .table {
+  color: #e9ecef;
+  border-color: #495057;
+}
+
+[data-darkmode="true"] .table thead {
+  border-color: #495057;
+}
+
+[data-darkmode="true"] .table tbody tr {
+  border-color: #495057;
+}
+
+[data-darkmode="true"] .table tbody tr:hover {
+  background-color: #495057;
+}
+
+[data-darkmode="true"] .form-control,
+[data-darkmode="true"] .form-select {
+  background-color: #495057;
+  border-color: #6c757d;
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .form-control:focus,
+[data-darkmode="true"] .form-select:focus {
+  background-color: #495057;
+  border-color: #80bdff;
+  color: #e9ecef;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+[data-darkmode="true"] .form-label {
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .btn-outline-primary {
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+[data-darkmode="true"] .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #212529;
+}
+
+[data-darkmode="true"] .nav-link {
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .nav-link.active {
+  color: #fff;
+  border-bottom-color: #0d6efd;
+}
+
+[data-darkmode="true"] .alert {
+  color: #e9ecef;
+}
+
+[data-darkmode="true"] .alert-danger {
+  background-color: #721c24;
+  border-color: #f5c6cb;
+}
+
+[data-darkmode="true"] .text-muted {
+  color: #adb5bd !important;
+}

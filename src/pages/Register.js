@@ -6,37 +6,24 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    role: 'student'
+    password: ''
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const { name, email, password, role } = formData;
+  const { name, email, password } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await api.post('/auth/register', formData);
+      const res = await api.post('/auth/register', { ...formData, role: 'student' });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
-      // Redirect based on role
-      switch (res.data.user.role) {
-        case 'student':
-          navigate('/student/dashboard');
-          break;
-        case 'recruiter':
-          navigate('/recruiter/dashboard');
-          break;
-        case 'admin':
-          navigate('/admin/dashboard');
-          break;
-        default:
-          navigate('/');
-      }
+      // Redirect to student dashboard since only students can register
+      navigate('/student/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
@@ -86,20 +73,7 @@ const Register = () => {
                     required
                   />
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Role</label>
-                  <select
-                    className="form-control"
-                    name="role"
-                    value={role}
-                    onChange={onChange}
-                  >
-                    <option value="student">Student</option>
-                    <option value="recruiter">Recruiter</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <button type="submit" className="btn btn-primary w-100">Register</button>
+                <button type="submit" className="btn btn-primary w-100">Register as Student</button>
               </form>
               <p className="mt-3 text-center">
                 Already have an account? <Link to="/">Login here</Link>

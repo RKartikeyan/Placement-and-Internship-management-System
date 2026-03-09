@@ -3,6 +3,8 @@ import api from '../../services/api';
 
 const RecruiterDashboard = () => {
   const [jobs, setJobs] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [selectedJob, setSelectedJob] = useState('');
   const [showJobForm, setShowJobForm] = useState(false);
   const [jobForm, setJobForm] = useState({
     title: '',
@@ -30,6 +32,28 @@ const RecruiterDashboard = () => {
     } catch (err) {
       setError('Failed to fetch jobs');
       setLoading(false);
+    }
+  };
+
+  const fetchJobApplications = async (jobId) => {
+    try {
+      const res = await api.get(`/applications/job/${jobId}`);
+      setApplications(res.data);
+      setSelectedJob(jobId);
+    } catch (err) {
+      alert('Failed to fetch applications');
+    }
+  };
+
+  const updateApplicationStatus = async (applicationId, status) => {
+    try {
+      await api.put(`/applications/${applicationId}/status`, { status });
+      // Refresh applications
+      if (selectedJob) {
+        fetchJobApplications(selectedJob);
+      }
+    } catch (err) {
+      alert('Failed to update application status');
     }
   };
 
@@ -220,12 +244,20 @@ const RecruiterDashboard = () => {
                         {job.location} • {job.type}
                       </h6>
                     </div>
-                    <button
-                      className="btn btn-outline-danger btn-sm"
-                      onClick={() => deleteJob(job._id)}
-                    >
-                      Delete
-                    </button>
+                    <div>
+                      <button
+                        className="btn btn-outline-info btn-sm me-2"
+                        onClick={() => fetchJobApplications(job._id)}
+                      >
+                        View Applicants
+                      </button>
+                      <button
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={() => deleteJob(job._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                   <p className="card-text">{job.description}</p>
                   <div className="row">
@@ -247,6 +279,94 @@ const RecruiterDashboard = () => {
                 </div>
               </div>
             ))
+          )}
+
+          {applications.length > 0 && (
+            <div className="mt-4">
+              <h4>Applicants for Selected Job</h4>
+              <div className="table-responsive">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>College</th>
+                      <th>Skills</th>
+                      <th>ATS Score</th>
+                      <th>Resume</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {applications.map(app => (
+                      <tr key={app._id}>
+                        <td>{app.student.name}</td>
+                        <td>{app.student.email}</td>
+                        <td>{app.student.profile?.college || 'N/A'}</td>
+                        <td>{app.student.profile?.skills ? app.student.profile.skills.join(', ') : 'N/A'}</td>
+                        <td>
+                          <span className={`badge ${
+                            app.atsScore >= 70 ? 'bg-success' :
+                            app.atsScore >= 50 ? 'bg-warning' : 'bg-danger'
+                          }`}>
+                            {app.atsScore}%
+                          </span>
+                        </td>
+                        <td>
+                          {app.student.resume ? (
+                            <a
+                              href={`http://localhost:5000/uploads/${app.student.resume}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-sm btn-outline-primary"
+                            >
+                              View
+                            </a>
+                          ) : (
+                            'No resume'
+                          )}
+                        </td>
+                        <td>
+                          <span className={`badge ${
+                            app.status === 'applied' ? 'bg-secondary' :
+                            app.status === 'shortlisted' ? 'bg-warning' :
+                            app.status === 'rejected' ? 'bg-danger' : 'bg-success'
+                          }`}>
+                            {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="btn-group btn-group-sm">
+                            <button
+                              className="btn btn-outline-success"
+                              onClick={() => updateApplicationStatus(app._id, 'shortlisted')}
+                              disabled={app.status === 'shortlisted'}
+                            >
+                              Shortlist
+                            </button>
+                            <button
+                              className="btn btn-outline-danger"
+                              onClick={() => updateApplicationStatus(app._id, 'rejected')}
+                              disabled={app.status === 'rejected'}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              className="btn btn-outline-primary"
+                              onClick={() => updateApplicationStatus(app._id, 'hired')}
+                              disabled={app.status === 'hired'}
+                            >
+                              Hire
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           )}
         </div>
       </div>

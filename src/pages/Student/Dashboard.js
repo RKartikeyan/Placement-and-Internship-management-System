@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 const StudentDashboard = () => {
@@ -63,7 +64,10 @@ const StudentDashboard = () => {
         <div className="col-md-12">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h2>Welcome, {user?.name} (Student)</h2>
-            <button className="btn btn-danger" onClick={logout}>Logout</button>
+            <div>
+              <Link to="/student/profile" className="btn btn-outline-primary me-2">Update Profile</Link>
+              <button className="btn btn-danger" onClick={logout}>Logout</button>
+            </div>
           </div>
 
           {error && <div className="alert alert-danger">{error}</div>}
@@ -128,13 +132,23 @@ const StudentDashboard = () => {
                       <p className="card-text small">
                         {app.job.company.profile?.company || app.job.company.name}
                       </p>
-                      <span className={`badge ${
-                        app.status === 'applied' ? 'bg-primary' :
-                        app.status === 'shortlisted' ? 'bg-warning' :
-                        app.status === 'rejected' ? 'bg-danger' : 'bg-success'
-                      }`}>
-                        {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
-                      </span>
+                      <div className="mb-2">
+                        <span className={`badge ${
+                          app.status === 'applied' ? 'bg-primary' :
+                          app.status === 'shortlisted' ? 'bg-warning' :
+                          app.status === 'rejected' ? 'bg-danger' : 'bg-success'
+                        }`}>
+                          {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                        </span>
+                        {app.atsScore !== undefined && (
+                          <span className={`badge ms-2 ${
+                            app.atsScore >= 70 ? 'bg-success' :
+                            app.atsScore >= 50 ? 'bg-warning' : 'bg-danger'
+                          }`}>
+                            ATS: {app.atsScore}%
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))
